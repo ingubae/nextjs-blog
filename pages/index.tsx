@@ -5,17 +5,11 @@ import utilStyles from '../styles/uttls.module.css';
 import { getSortedPostsData } from '../lib/posts';
 import Date from '../components/date';
 import { GetStaticProps } from 'next';
+import { PostData } from './_app';
 
-export default function Home(
-  { allPostsData }:
-  {
-    allPostsData: {
-      id: string
-      title: string
-      date: string
-    }[]
-  }
-  ) {
+export default function Home( props: { allPostsData: PostData[] }) {
+    const { allPostsData } = props;
+
     return (
       <Layout home>
         <Head>
@@ -49,7 +43,8 @@ export default function Home(
 
 // Static Generation
 export const getStaticProps: GetStaticProps = async () => {
-  const allPostsData = getSortedPostsData();
+  const allPostsData: PostData[] = getSortedPostsData();
+
   return {
     props: {
       allPostsData,

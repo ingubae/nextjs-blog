@@ -1,6 +1,27 @@
 import '../styles/globals.css';
 import { AppProps } from 'next/app';
+import wrapper from '../store/configureStore';
+import { Provider } from 'react-redux';
 
-export default function App({ Component, pageProps }: AppProps ) {
-    return <Component {...pageProps} />;
-}
+export interface PostData {
+    id: string
+    date: string
+    title: string
+    contentHtml: string
+};
+
+export interface PostIds {
+    params: {id: string}
+};
+
+  
+const App = ({ Component, pageProps }: AppProps ) => {
+    const { store } = wrapper.useWrappedStore(pageProps);
+    return (
+        <Provider store={store}>
+            <Component {...pageProps} />
+        </Provider>
+    );
+};
+
+export default App;
