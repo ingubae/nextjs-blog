@@ -1,0 +1,17 @@
+http://localhost:3001/users
+
+###
+
+POST http://localhost:3001/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "ingu",
+    "password" : "manyang",
+    "email" : "nono@cat.co.kr"
+}
+
+###
+
+http://localhost:3001/users/1
+
