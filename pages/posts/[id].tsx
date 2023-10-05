@@ -10,7 +10,7 @@ type Props = {
     postData: PostData
 }
 
-export default function Post( props: Props) {
+export default function Post(props: Props) {
     const { postData } = props;
     return (
         <Layout>

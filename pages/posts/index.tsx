@@ -1,47 +1,40 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import Layout, { siteTitle } from '../components/layout';
-import utilStyles from '../styles/uttls.module.css';
 import { GetStaticProps } from 'next';
-import { UserData } from './_app';
-import { getUsersData } from '../lib/users';
+import Layout, { siteTitle } from '../../components/layout';
+import utilStyles from '../../styles/uttls.module.css';
+import { getSortedPostsData } from '../../lib/posts';
+import Date from '../../components/date';
+import { PostData } from '../_app';
 
-
-
-export default function Home(props: { allUsersData: UserData[] }) {
-    const { allUsersData } = props;
+export default function Posts(props: { allPostsData: PostData[] }) {
+    const { allPostsData } = props;
 
     return (
-      <Layout home>
+      <Layout>
         <Head>
           <title>{siteTitle}</title>
         </Head>
         <section className={utilStyles.headingMd}>
-          <p>Hi, I'm Ingu. I am a developer</p>
+          <p>This is Post list</p>
           <p>
             (This is a sample website - you’ll be building a site like this on{' '}
             <Link href="posts/first-post">our Next.js tutorial</Link>.)
           </p>
         </section>
         <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-          <h2 className={utilStyles.headingLg}>Blog</h2>
+          <h2 className={utilStyles.headingLg}>Post</h2>
           <ul className={utilStyles.list}>
-            <li className={utilStyles.listItem} >
-              <Link href={`/users`}>User list</Link>
-            </li>
-            <li className={utilStyles.listItem} >
-              <Link href={`/posts`}>Post list</Link>
-            </li>
-            {/* { allUsersData.map( ({ id, name, email }) => (
+            { allPostsData.map( ({ id, title, date }) => (
                 <li className={utilStyles.listItem} key={id}>
-                  <Link href={`/users/${id}`}>{name}</Link>
+                  <Link href={`/posts/${id}`}>{title}</Link>
                   <br />
                   <small className={utilStyles.lightText}>
-                    {email} 
+                    <Date dateString={date} />
                   </small>
                 </li>
               )) 
-            } */}
+            }
           </ul>
         </section>
       </Layout>
@@ -50,11 +43,22 @@ export default function Home(props: { allUsersData: UserData[] }) {
 
 // Static Generation
 export const getStaticProps: GetStaticProps = async () => {
-  const allUsersData: UserData[] = await getUsersData();
+  const allPostsData: PostData[] = getSortedPostsData();
 
   return {
     props: {
-        allUsersData,
+      allPostsData,
     }
   }
 }
+
+
+// // Server-side Rendering
+// export async function getServerSideProps(context) {
+//   const allPostsData = getSortedPostsData();
+//   return {
+//     props: {
+//       allPostsData,
+//     }
+//   }
+// }

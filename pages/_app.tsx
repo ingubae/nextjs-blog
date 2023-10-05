@@ -14,6 +14,18 @@ export interface PostIds {
     params: {id: string}
 };
 
+export interface UserData {
+    id: number;
+    name: string;
+    email: string
+    password: string
+};
+
+export interface UserIds {
+    params: {id: string}
+};
+
+
   
 const App = ({ Component, pageProps }: AppProps ) => {
     const { store } = wrapper.useWrappedStore(pageProps);
